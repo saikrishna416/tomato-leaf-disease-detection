@@ -1,7 +1,6 @@
 flask
 tensorflow==2.19.0
 pillow
-keras
 opencv-python-headless
 matplotlib
 pandas

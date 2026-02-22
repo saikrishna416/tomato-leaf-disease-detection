@@ -4,6 +4,9 @@ It is built using Python, Flask, and a Convolutional Neural Network (CNN) model.
 
 The main goal of this project is to help in early detection of plant diseases by analyzing leaf images.
 
+🚀 **Live Demo:**  
+👉https://tomato-leaf-disease-detection.up.railway.app/
+
 ---
 ## 📌 About the Project
 In agriculture, plant diseases can reduce crop productivity.  

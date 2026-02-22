@@ -9,6 +9,9 @@ import os
 import csv
 from datetime import datetime
 from utils import load_class_indices, decode_prediction, validate_class_mapping, is_healthy_prediction
+import tensorflow as tf
+tf.config.set_visible_devices([], 'GPU')
+import tensorflow as tf
 
 # Optional OpenCV for basic leaf detection/segmentation
 try:

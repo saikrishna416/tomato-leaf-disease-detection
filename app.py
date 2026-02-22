@@ -619,6 +619,8 @@ def predict_sample(filename):
 
     return render_template('results.html', prediction=result, friendly_name=friendly, advice=advice, image_path=filepath, top3=top3, confidence=conf_val, low_confidence=low_confidence, is_green=is_green)
    
+import os
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=7000, debug=False)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)

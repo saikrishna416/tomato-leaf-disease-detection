@@ -1,7 +1,4 @@
-flask
+streamlit
 tensorflow==2.19.0
 pillow
-opencv-python-headless
-matplotlib
-pandas
-gunicorn
+numpy

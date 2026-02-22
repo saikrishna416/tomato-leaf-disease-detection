@@ -66,6 +66,21 @@ tomato-leaf-disease-detection/
 5. Open your browser and go to:
    http://127.0.0.1:5000
 ---
+## 📸 Application Screenshots
+
+### 🏠 Home Page
+![Home](app_screenshots/home.jpeg)
+
+### 📊 Prediction Result
+![Result](app_screenshots/result.jpeg)
+
+### 📈 Metrics Page
+![Metrics](app_screenshots/metrics.jpeg)
+
+### 🕒 History Page
+![History](app_screenshots/history.jpeg)
+
+----
 ## 🌱 Future Improvements
 
 - Deploy the application to cloud platform  

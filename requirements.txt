@@ -1,5 +1,5 @@
 flask
-tensorflow==2.16.1
+tensorflow==2.19.0
 pillow
 keras
 opencv-python-headless

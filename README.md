@@ -67,7 +67,7 @@ tomato-leaf-disease-detection/
 4. Run the application:
    python app.py
 5. Open your browser and go to:
-   http://127.0.0.1:7000/
+   http://127.0.0.1:5000/
 ---
 ## 📸 Application Screenshots
 

@@ -1,4 +1,7 @@
-streamlit
-tensorflow==2.20.0
-pillow
+flask
+gunicorn
+tensorflow-cpu==2.20.0
 numpy
+pillow
+pandas
+matplotlib

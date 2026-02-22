@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Model Metrics</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+
+    <style>
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .chart-box {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        .chart-box h3 {
+            margin-top: 0;
+            font-size: 18px;
+            text-align: center;
+        }
+        canvas {
+            max-width: 100%;
+        }
+        img {
+            width: 100%;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="site-header">
+    <div class="container-inner">
+        <h1 class="brand">Tomato Leaf Disease Detector</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/details">Details & Remedies</a>
+            <a href="/metrics">Model Metrics</a>
+            <a href="/history">History</a>
+        </nav>
+    </div>
+</header>
+
+<main class="content container-inner">
+
+    <h2>Model Evaluation Dashboard</h2>
+
+    <div class="metrics-grid">
+
+        <!-- Validation Accuracy -->
+        <div class="chart-box">
+            <h3>Validation Accuracy</h3>
+            <canvas id="accuracyChart"></canvas>
+        </div>
+
+        <!-- Per-Class F1 Score -->
+        <div class="chart-box">
+            <h3>Per-Class F1 Score</h3>
+            <canvas id="f1Chart"></canvas>
+        </div>
+
+        <!-- Confusion Matrix Image -->
+        <div class="chart-box">
+            <h3>Confusion Matrix</h3>
+            <img src="{{ url_for('static', filename='images/confusion_matrix.jpeg') }}">
+        </div>
+
+    </div>
+
+</main>
+
+<footer class="site-footer">
+    <div class="container-inner">
+        <p>© Tomato Leaf Disease Detector</p>
+    </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+    var accuracy = {{ accuracy }};
+    var classNames = {{ class_names | tojson }};
+    var report = {{ report | tojson }};
+
+    // Validation Accuracy Chart
+    new Chart(document.getElementById('accuracyChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Validation Accuracy'],
+            datasets: [{
+                label: 'Accuracy',
+                data: [accuracy],
+                backgroundColor: '#28a745'
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: { beginAtZero: true, max: 1 }
+            }
+        }
+    });
+
+    // F1 Score Chart
+    var f1Scores = classNames.map(name => report[name]["f1-score"]);
+
+    new Chart(document.getElementById('f1Chart'), {
+        type: 'bar',
+        data: {
+            labels: classNames.map(c =>
+                c.replace("Tomato___","").replace(/_/g," ")
+            ),
+            datasets: [{
+                label: 'F1 Score',
+                data: f1Scores,
+                backgroundColor: '#007bff'
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            scales: {
+                x: { beginAtZero: true, max: 1 }
+            }
+        }
+    });
+
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Confirm Report</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main style="padding:28px;">
+    <h2>Report Image</h2>
+    <p class="muted">You requested to report this image. Use the buttons below to confirm how you'd like to report it.</p>
+    <div style="margin-top:12px">
+      {% if image_path %}
+        <img src="{{ image_path }}" alt="To report" style="max-width:320px;border-radius:8px;display:block;margin-bottom:12px">
+      {% endif %}
+      <form method="post" action="/report" style="display:inline-block;margin-right:8px">
+        <input type="hidden" name="image_path" value="{{ image_path }}">
+        <input type="hidden" name="prediction" value="{{ prediction }}">
+        <button class="btn" type="submit">Report Incorrect Prediction</button>
+      </form>
+      <form method="post" action="/report_not_tomato" style="display:inline-block">
+        <input type="hidden" name="image_path" value="{{ image_path }}">
+        <button class="btn" type="submit">Report: Not a tomato</button>
+      </form>
+      <a class="btn" href="/" style="margin-left:12px">Cancel</a>
+    </div>
+  </main>
+</body>
+</html>

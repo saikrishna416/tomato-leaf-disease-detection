@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Prediction Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .result-card { background: #f9f9f9; padding: 24px; border-radius: 8px; margin-top: 20px; }
+        .result-title { font-size: 28px; font-weight: bold; color: #007bff; margin-bottom: 8px; }
+        .result-confidence { font-size: 18px; color: #666; margin-bottom: 20px; }
+        .probs-list { list-style: none; padding: 0; }
+        .probs-list li { padding: 10px; border-bottom: 1px solid #e1e1e1; display: flex; justify-content: space-between; }
+        .probs-list li:last-child { border-bottom: none; }
+        .remedy-section { background: #fff; padding: 16px; border-radius: 6px; margin-top: 16px; border-left: 4px solid #28a745; }
+        .remedy-section h3 { margin-top: 0; color: #28a745; }
+        .remedy-list { list-style-position: inside; color: #555; }
+        .remedy-list li { margin: 8px 0; }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container-inner">
+            <h1 class="brand">Tomato Leaf Disease Detector</h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/details">Details & Remedies</a>
+                <a href="/metrics">Model Metrics</a>
+                <a href="/history">History</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="hero">
+        <div class="container-inner">
+            <div class="result-card">
+                <div class="result-title">
+                    <!-- Uploaded Image -->
+                    {% if image_file %}
+                    <div style="text-align:center;margin-bottom:20px">
+                        <img src="{{ url_for('static', filename='uploads/' + image_file) }}"
+                            style="max-width:300px;border-radius:8px;box-shadow:0 4px 10px rgba(0,0,0,0.2)">
+                    </div>
+                    {% endif %}
+
+                    <!-- Prediction Box -->
+                    {% set is_healthy = 'healthy' in predicted_class.lower() %}
+
+                <div style="padding:18px;
+                            border-radius:10px;
+                            background-color: {{ '#d4edda' if is_healthy else '#f8d7da' }};
+                            color: {{ '#155724' if is_healthy else '#721c24' }};
+                            font-size:24px;
+                            font-weight:bold;
+                            text-align:center;
+                            margin-bottom:20px;
+                            box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+
+                    {% if is_healthy %}
+                        ✅ {{ predicted_class }} ({{ "%.1f"|format(confidence*100) }}%)
+                    {% else %}
+                        ⚠️ {{ predicted_class }} ({{ "%.1f"|format(confidence*100) }}%)
+                    {% endif %}
+
+                </div>
+                <div class="result-confidence">Confidence: {{ "%.1f"|format(confidence * 100) }}%</div>
+                <div style="margin-top:10px;margin-bottom:20px">
+                <div style="background:#e9ecef;border-radius:20px;height:20px;overflow:hidden">
+                    <div style="
+                        width: {{ confidence*100 }}%;
+                        background: linear-gradient(to right, #17a2b8, #007bff);
+                        height:100%;
+                        text-align:right;
+                        padding-right:5px;
+                        color:white;
+                        font-size:12px;
+                        line-height:20px;">
+                        {{ "%.1f"|format(confidence*100) }}%
+                    </div>
+                </div>
+            </div>
+                <!-- Disease Description and Remedies -->
+                {% if remedies %}
+                <div class="remedy-section">
+                    <h3>Disease Description</h3>
+                    <p>{{ remedies.description }}</p>
+                </div>
+                
+                <div class="remedy-section">
+                    <h3>Symptoms</h3>
+                    <p>{{ remedies.symptoms }}</p>
+                </div>
+                
+                {% if predicted_class != 'Healthy' %}
+                <div class="remedy-section">
+                    <h3>Treatment & Management</h3>
+                    <ul class="remedy-list">
+                        {% for treatment in remedies.treatment %}
+                        <li>{{ treatment }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                
+                <div class="remedy-section">
+                    <h3>Prevention Methods</h3>
+                    <ul class="remedy-list">
+                        {% for prev in remedies.prevention %}
+                        <li>{{ prev }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% else %}
+                <div class="remedy-section" style="background:#d1fae5;border-left-color:#10b981">
+                    <h3 style="color:#10b981">✓ Leaf is Healthy</h3>
+                    <p>No disease detected. Continue regular plant maintenance and monitoring.</p>
+                </div>
+                {% endif %}
+                {% endif %}
+                
+                <h3 style="margin-top:20px">All Predictions</h3>
+                <ul class="probs-list">
+                    {% for class_name, prob in all_probabilities.items() %}
+                    <li>
+                        <span>{{ class_name }}</span>
+                        <span>{{ "%.1f"|format(prob) }}%</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                
+                <div style="margin-top:20px">
+                    <a href="/" class="btn btn-primary">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container-inner">
+            <p>© Tomato Leaf Disease Detector — For educational purposes. Always consult local agricultural extension services.</p>
+        </div>
+    </footer>
+</body>
+</html>

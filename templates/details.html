@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Details & Remedies</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container-inner">
+            </h2 class="brand">Tomato Leaf Disease Detector</h2>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/details">Details & Remedies</a>
+                <a href="/metrics">Model Metrics</a>
+                <a href="/history">History</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="content container-inner">
+        <h2>Diseases & Recommended Treatments</h2>
+        <p class="muted">General guidance — consult local extension services for exact products and application rates.</p>
+        <div class="table-responsive">
+            <table class="disease-table">
+                <thead>
+                    <tr><th>Disease</th><th>Recommended Treatments / Medicines</th></tr>
+                </thead>
+                <tbody>
+                {% for key, adv in treatment_advice.items() %}
+                    <tr>
+                        <td>{{ friendly_names.get(key, key) }}</td>
+                        <td>
+                            <ul>
+                                {% for item in adv %}
+                                    <li>{{ item }}</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <h3 style="margin-top:28px">Disease Info (Causes, Symptoms, Spread, Prevention)</h3>
+        <div class="table-responsive">
+            <table class="disease-table">
+                <thead>
+                    <tr><th>Disease</th><th>Causes</th><th>Symptoms</th><th>Spread</th><th>Prevention</th></tr>
+                </thead>
+                <tbody>
+                {% for key, info in disease_info.items() %}
+                    <tr>
+                        <td>{{ friendly_names.get(key, key) }}</td>
+                        <td>{{ info.causes }}</td>
+                        <td>{{ info.symptoms }}</td>
+                        <td>{{ info.spread }}</td>
+                        <td>{{ info.prevention }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <a class="btn" href="/">← Back to Home</a>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container-inner">
+            <p>© Tomato Leaf Disease Detector</p>
+        </div>
+    </footer>
+</body>
+</html>

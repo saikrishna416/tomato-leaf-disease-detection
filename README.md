@@ -94,9 +94,9 @@ tomato-leaf-disease-detection/
 ---
 ## 👨‍💻 Author
 
-Talupuri Venkata Sai Krishna
+Sai Krishna  
 Computer Science Engineering Student  
-
+Passionate about AI, Machine Learning & Full-Stack Development
 ---
 
 If you found this project useful, feel free to give it a ⭐

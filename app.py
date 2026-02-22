@@ -25,11 +25,34 @@ app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
 
 # Load model at startup
+# Build model architecture manually and load weights
 try:
-    model = load_model('clean_model.keras')
-    print("✓ Model loaded successfully")
+    from tensorflow.keras.applications import MobileNetV2
+    from tensorflow.keras import layers, models
+
+    IMG_SIZE = 224
+    num_classes = 10  # You have 10 classes
+
+    base_model = MobileNetV2(
+        input_shape=(IMG_SIZE, IMG_SIZE, 3),
+        include_top=False,
+        weights=None
+    )
+
+    base_model.trainable = False
+
+    model = models.Sequential([
+        base_model,
+        layers.GlobalAveragePooling2D(),
+        layers.Dense(128, activation="relu"),
+        layers.Dense(num_classes, activation="softmax")
+    ])
+
+    model.load_weights("tomato_leaf_disease_model.h5")
+    print("✓ Model architecture built and weights loaded successfully")
+
 except Exception as e:
-    print(f"ERROR: Failed to load model.keras: {e}")
+    print(f"ERROR: Failed to build/load model: {e}")
     model = None
 
 # Load and validate class indices

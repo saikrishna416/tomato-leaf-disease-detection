@@ -1,8 +1,0 @@
-flask
-tensorflow
-pillow
-keras
-opencv-python
-matplotlib
-pandas
-gunicorn

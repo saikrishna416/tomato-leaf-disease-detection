@@ -5,3 +5,4 @@ keras
 opencv-python
 matplotlib
 pandas
+gunicorn

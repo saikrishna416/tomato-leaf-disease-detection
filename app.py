@@ -26,10 +26,10 @@ app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-producti
 
 # Load model at startup
 try:
-    model = load_model('tomato_leaf_disease_model.h5')
+    model = load_model('tomato_leaf_disease_model.keras')
     print("✓ Model loaded successfully")
 except Exception as e:
-    print(f"ERROR: Failed to load model.h5: {e}")
+    print(f"ERROR: Failed to load model.keras: {e}")
     model = None
 
 # Load and validate class indices

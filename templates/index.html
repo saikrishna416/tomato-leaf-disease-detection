@@ -116,8 +116,7 @@
             <h2>Upload a leaf image</h2>
             <p class="muted">Supports .png, .jpg, .jpeg</p>
 
-            <form id="uploadForm" action="/predict" method="POST" enctype="multipart/form-data">
-
+            <form id="uploadForm" action="{{ url_for('predict') }}" method="POST" enctype="multipart/form-data">
                 <!-- Gallery Input -->
                 <input type="file"
                        id="galleryInput"
